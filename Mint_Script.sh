@@ -2,9 +2,9 @@
 # Linux Mint Xfce ISO modification script. 
 
 ### CONFIGURATION AND VARIABLES ###
-ISO_NAME="linuxmint-basic.iso"
+BASIC_ISO="linuxmint-basic.iso"
 CUSTOM_ISO="linuxmint-custom.iso"
-CONFIG_FILES_DIR="config_files"
+CONFIG_FILES="config_files"
 WORK_DIR="work"
 SQUASHFS_DIR="$WORK_DIR/squashfs-root"
 MOUNT_DIR="$WORK_DIR/mount"
@@ -43,7 +43,7 @@ apt update && apt install -y squashfs-tools xorriso curl rsync isolinux syslinux
 ### 1. Extract Original ISO ###
 mkdir -p "$WORK_DIR" "$MOUNT_DIR" "$SQUASHFS_DIR"
 echo "Extracting ISO..."
-mount -o loop "$ISO_NAME" "$MOUNT_DIR"
+mount -o loop "$BASIC_ISO" "$MOUNT_DIR"
 rsync -a "$MOUNT_DIR/" "$WORK_DIR/"
 umount "$MOUNT_DIR"
 
@@ -108,19 +108,19 @@ cp /etc/resolv.conf "$SQUASHFS_DIR/etc/resolv.conf"
 # ---Add configs---
 # XFCE4
 mkdir -p "$SQUASHFS_DIR/etc/skel/.config/xfce4"
-cp -r "$CONFIG_FILES_DIR/xfce4/"* "$SQUASHFS_DIR/etc/skel/.config/xfce4/"
+cp -r "$CONFIG_FILES/xfce4/"* "$SQUASHFS_DIR/etc/skel/.config/xfce4/"
 # PCManFM
 mkdir -p "$SQUASHFS_DIR/etc/skel/.config/pcmanfm"
-cp -r "$CONFIG_FILES_DIR/pcmanfm/"* "$SQUASHFS_DIR/etc/skel/.config/pcmanfm/"
+cp -r "$CONFIG_FILES/pcmanfm/"* "$SQUASHFS_DIR/etc/skel/.config/pcmanfm/"
 # Brave
 mkdir -p "$SQUASHFS_DIR/etc/skel/.config/BraveSoftware"
-cp -r "$CONFIG_FILES_DIR/BraveSoftware/"* "$SQUASHFS_DIR/etc/skel/.config/BraveSoftware/"
+cp -r "$CONFIG_FILES/BraveSoftware/"* "$SQUASHFS_DIR/etc/skel/.config/BraveSoftware/"
 # mimeapps
 mkdir -p "$SQUASHFS_DIR/etc/skel/.config"
-cp -r "$CONFIG_FILES_DIR/mimeapps.list" "$SQUASHFS_DIR/etc/skel/.config/mimeapps.list"
+cp -r "$CONFIG_FILES/mimeapps.list" "$SQUASHFS_DIR/etc/skel/.config/mimeapps.list"
 # Firefox
 mkdir -p "$SQUASHFS_DIR/etc/skel/.mozilla/firefox"
-cp -r "$CONFIG_FILES_DIR/firefox/"* "$SQUASHFS_DIR/etc/skel/.mozilla/firefox/"
+cp -r "$CONFIG_FILES/firefox/"* "$SQUASHFS_DIR/etc/skel/.mozilla/firefox/"
 
 # Create and configure the user
 echo "Creating user inside chroot..."
