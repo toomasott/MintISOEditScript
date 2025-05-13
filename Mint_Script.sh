@@ -84,7 +84,7 @@ d-i apt-setup/non-free boolean true
 d-i apt-setup/contrib boolean true
 d-i apt-setup/services-select multiselect security, updates
  
-d-i pkgsel/include string linux-image-generic-hwe-22.04
+d-i pkgsel/include string linux-image-generic-hwe-24.04
 d-i pkgsel/upgrade select full-upgrade
  
 d-i grub-installer/only_debian boolean true
@@ -210,12 +210,12 @@ cd ..
 # Modify ISOLINUX timeout (BIOS boot)
 if [ -f "$WORK_DIR/isolinux/isolinux.cfg" ]; then
     echo "Modifying ISOLINUX configuration for BIOS..."
-    sed -i 's/^\(timeout\s*\).*$/\10/' "$WORK_DIR/isolinux/isolinux.cfg"
+    sed -i 's/^\(timeout\s*\).*$/\1 0/' "$WORK_DIR/isolinux/isolinux.cfg"
 fi
 # Modify GRUB timeout (UEFI boot)
 if [ -f "$WORK_DIR/boot/grub/grub.cfg" ]; then
     echo "Modifying GRUB configuration for UEFI..."
-    sed -i 's/^\(set timeout=\).*/\10/' "$WORK_DIR/boot/grub/grub.cfg"
+    sed -i 's/^\(set timeout=\).*/\1 0/' "$WORK_DIR/boot/grub/grub.cfg"
 fi
  
 ### 6. Rebuild ISO ###
