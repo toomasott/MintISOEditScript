@@ -242,4 +242,5 @@ isohybrid --uefi "$CUSTOM_ISO"
 echo "Custom ISO created: $CUSTOM_ISO"
 
 echo "Cleaning up..."
+umount -Rl "$SQUASHFS_DIR" || true
 rm -rf "$SQUASHFS_DIR" "$MOUNT_DIR"
