@@ -22,6 +22,7 @@ if [ ! -f "$BASIC_ISO" ]; then
     LATEST_VERSION=$(curl -s "$MIRROR_URL/" | grep -oP 'href="\K[0-9.]+(?=/")' | sort -V | tail -n 1)
     ISO_URL="${MIRROR_URL}/${LATEST_VERSION}/linuxmint-${LATEST_VERSION}-xfce-64bit.iso"
     wget -q --show-progress -O "$BASIC_ISO" "$ISO_URL"
+    chmod 777 $BASIC_ISO
 fi
 
 # Ensure config files
@@ -29,6 +30,7 @@ if [ ! -d "$CONFIG_FILES" ]; then
     echo "$CONFIG_FILES not found. Downloading Linux Mint Xfce config files."
     apt update && apt install -y git
     git clone https://github.com/toomasott/MintConfigFiles "$CONFIG_FILES"
+    chmod -R 777 "$CONFIG_FILES"
 fi
 
 #Cleanup (just in case)
